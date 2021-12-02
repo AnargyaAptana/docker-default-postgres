@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+    pg:
+        image: postgres:13.4
+        container_name: default-pg
+        restart: unless-stopped
+        ports:
+            - ${PG_PORT}:5432
+        environment:
+            - POSTGRES_DB=${PG_DB_NAME}
+            - POSTGRES_PASSWORD=${PG_PASSWORD}
+        volumes:
+            - "./postgres/dbdata:/var/lib/postgresql/data"
+        networks:
+            - default-pg-network
+
+networks:
+    default-pg-network:
+        name: pg-network
+        driver: bridge
